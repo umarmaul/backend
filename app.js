@@ -12,7 +12,7 @@ const app = express();
 app.use(bodyParser.json());
 
 //Database Connection
-const URI = "mongodb://localhost:27017/User_Profile";
+const URI = "mongodb://localhost:27017/theWizard";
 mongoose
 	.connect(URI)
 	.then(() => console.log("Database Connected"))

@@ -1,5 +1,4 @@
 const User = require("../models/User");
-const mongoose = require("mongoose");
 const fs = require("fs");
 const DIR = "./";
 
@@ -47,7 +46,7 @@ module.exports = class UserController {
 				email,
 				password,
 				role,
-				photo: `http://localhost:5000/user/${getImageName[1]}`,
+				photo: `http://localhost:3000/user/${getImageName[1]}`,
 			};
 
 			return res.status(200).json({

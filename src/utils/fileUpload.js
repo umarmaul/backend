@@ -38,6 +38,6 @@ const fileUpload = (destination) =>
 			return console.log("error", err);
 			next(err);
 		},
-	}).single("image");
+	}).single("photo");
 
 module.exports = fileUpload;
