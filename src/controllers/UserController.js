@@ -1,3 +1,6 @@
+//Environment variables
+require("dotenv").config({ path: "./.env.development" });
+
 const User = require("../models/User");
 const fs = require("fs");
 const DIR = "./";
@@ -46,7 +49,7 @@ module.exports = class UserController {
 				email,
 				password,
 				role,
-				photo: `http://localhost:3000/user/${getImageName[1]}`,
+				photo: `${process.env.LINK_SERVICE_URL}/user/${getImageName[1]}`,
 			};
 
 			return res.status(200).json({

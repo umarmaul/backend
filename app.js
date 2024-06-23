@@ -1,3 +1,6 @@
+//Environment Variable
+require("dotenv").config({ path: "./.env.development" });
+
 //Import Library
 const express = require("express");
 const multer = require("multer");
@@ -12,9 +15,8 @@ const app = express();
 app.use(bodyParser.json());
 
 //Database Connection
-const URI = "mongodb://localhost:27017/theWizard";
 mongoose
-	.connect(URI)
+	.connect(process.env.MONGO_URI)
 	.then(() => console.log("Database Connected"))
 	.catch((err) => console.log(err));
 
