@@ -1,5 +1,5 @@
 //Environment variables
-require("dotenv").config({ path: "./.env.local" });
+require("dotenv").config({ path: "./.env.development" });
 
 const User = require("../models/User");
 const fs = require("fs");

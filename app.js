@@ -1,5 +1,5 @@
 //Environment Variable
-require("dotenv").config({ path: "./.env.local" });
+require("dotenv").config({ path: "./.env.development" });
 
 //Import Library
 const express = require("express");

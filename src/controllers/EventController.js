@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "./.env.local" });
+require("dotenv").config({ path: "./.env.development" });
 
 const Event = require("../models/Event");
 const Camera = require("../models/Camera");
