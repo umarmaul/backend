@@ -39,31 +39,16 @@ module.exports = class EventController {
 			const singleEventInfo = await Event.findById(id).populate(
 				"from_camera"
 			);
-			const {
-				event_level,
-				event_type,
-				event_picture,
-				description,
-				from_camera,
-				status,
-			} = singleEventInfo;
+			const { event_picture } = singleEventInfo;
 			let getImageName = event_picture.match(/\/([^\/?#]+)[^\/]*$/);
 
 			//return console.log(getImageName);
-
-			const singleEventData = {
-				event_level,
-				event_type,
-				description,
-				from_camera,
-				status,
-				event_picture: `${process.env.LINK_SERVICE_URL}/event/${getImageName[1]}`,
-			};
+			singleEventInfo.event_picture = `${process.env.LINK_SERVICE_URL}/event/${getImageName[1]}`;
 
 			return res.status(200).json({
 				code: 200,
 				message: "Single Event Information",
-				data: singleEventData,
+				data: singleEventInfo,
 			});
 			//return console.log(singleEventInfo)
 		} catch (error) {
