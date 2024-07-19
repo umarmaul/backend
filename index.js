@@ -1,5 +1,5 @@
 //Environment Variable
-require("dotenv").config({ path: "./.env.development" });
+require("dotenv").config({ path: "./.env.local" });
 
 const app = require("./app");
 

@@ -1,5 +1,6 @@
 node_modules/
-/storage/images/
+/storage/profile-pictures/
+/storage/event-pictures/
 
 .env
 .env.local

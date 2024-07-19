@@ -1,5 +1,5 @@
 //Environment variables
-require("dotenv").config({ path: "./.env.development" });
+require("dotenv").config({ path: "./.env.local" });
 
 const User = require("../models/User");
 const fs = require("fs");
@@ -12,8 +12,8 @@ module.exports = class UserController {
 
 		//Image check if have then include image into payload
 		let imgUrl = "";
-		if (req.file) imgUrl = `storage/images/${req.file.filename}`;
-		payload.photo = imgUrl;
+		if (req.file) imgUrl = `storage/profile-pictures/${req.file.filename}`;
+		payload.profile_picture = imgUrl;
 
 		try {
 			const userCreate = await new User(payload).save();
@@ -37,25 +37,25 @@ module.exports = class UserController {
 
 		try {
 			const singleUserInfo = await User.findById(id);
-			const { name, username, email, password, role, photo } =
+			const { name, username, email, password, role, profile_picture } =
 				singleUserInfo;
-			let getImageName = photo.match(/\/([^\/?#]+)[^\/]*$/);
+			let getImageName = profile_picture.match(/\/([^\/?#]+)[^\/]*$/);
 
 			//return console.log(getImageName);
 
-			const singleuUserData = {
+			const singleUserData = {
 				name,
 				username,
 				email,
 				password,
 				role,
-				photo: `${process.env.LINK_SERVICE_URL}/user/${getImageName[1]}`,
+				profile_picture: `${process.env.LINK_SERVICE_URL}/user/${getImageName[1]}`,
 			};
 
 			return res.status(200).json({
 				code: 200,
-				message: "User Information",
-				data: singleuUserData,
+				message: "Single User Information",
+				data: singleUserData,
 			});
 			//return console.log(singleUserInfo)
 		} catch (error) {
@@ -75,7 +75,7 @@ module.exports = class UserController {
 			//return console.log(singleUserInfo);
 			return res.status(200).json({
 				code: 200,
-				message: "User Information",
+				message: "All User Information",
 				data: allUserInfo,
 			});
 			//return console.log(singleUserInfo)
@@ -95,15 +95,15 @@ module.exports = class UserController {
 
 		//If File have then push file into reqBody then process update
 		let imgUrl = "";
-		if (req.file) imgUrl = `storage/images/${req.file.filename}`;
-		reqBody.photo = imgUrl;
+		if (req.file) imgUrl = `storage/profile-pictures/${req.file.filename}`;
+		reqBody.profile_picture = imgUrl;
 
 		try {
-			//Check user have photo/image. if had then first delete local file then database
+			//Check user have profile_picture/image. if had then first delete local file then database
 			const userInfo = await User.findById(id);
-			const userPhotoInfo = userInfo.photo;
-			if (userPhotoInfo) {
-				fs.unlinkSync(DIR + userPhotoInfo);
+			const userprofile_pictureInfo = userInfo.profile_picture;
+			if (userprofile_pictureInfo) {
+				fs.unlinkSync(DIR + userprofile_pictureInfo);
 			}
 
 			const updateItem = await User.findOneAndUpdate(
@@ -130,10 +130,10 @@ module.exports = class UserController {
 		//return console.log(id)
 		try {
 			const userDeleteinfo = await User.findOneAndDelete({ _id: id });
-			const { photo } = userDeleteinfo;
+			const { profile_picture } = userDeleteinfo;
 
-			if (photo) {
-				fs.unlinkSync(DIR + photo);
+			if (profile_picture) {
+				fs.unlinkSync(DIR + profile_picture);
 			}
 
 			//const userDelete = await User.deleteOne({_id: id});

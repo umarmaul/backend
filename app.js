@@ -1,5 +1,5 @@
 //Environment Variable
-require("dotenv").config({ path: "./.env.development" });
+require("dotenv").config({ path: "./.env.local" });
 
 //Import Library
 const express = require("express");
@@ -21,7 +21,8 @@ mongoose
 	.catch((err) => console.log(err));
 
 //Storage
-app.use("/user", express.static("storage/images"));
+app.use("/user", express.static("storage/profile-pictures"));
+app.use("/event", express.static("storage/event-pictures"));
 
 //Base Routes
 app.use("/api/v1", router);
