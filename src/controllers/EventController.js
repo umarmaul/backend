@@ -12,7 +12,7 @@ module.exports = class EventController {
 
 		//Image check if have then include image into payload
 		let imgUrl = "";
-		if (req.file) imgUrl = `storage/profile-pictures/${req.file.filename}`;
+		if (req.file) imgUrl = `storage/event-pictures/${req.file.filename}`;
 		payload.event_picture = imgUrl;
 
 		try {
