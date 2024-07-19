@@ -37,25 +37,16 @@ module.exports = class UserController {
 
 		try {
 			const singleUserInfo = await User.findById(id);
-			const { name, username, email, password, role, profile_picture } =
-				singleUserInfo;
+			const { profile_picture } = singleUserInfo;
 			let getImageName = profile_picture.match(/\/([^\/?#]+)[^\/]*$/);
 
 			//return console.log(getImageName);
-
-			const singleUserData = {
-				name,
-				username,
-				email,
-				password,
-				role,
-				profile_picture: `${process.env.LINK_SERVICE_URL}/user/${getImageName[1]}`,
-			};
+			singleUserInfo.profile_picture = `${process.env.LINK_SERVICE_URL}/user/${getImageName[1]}`;
 
 			return res.status(200).json({
 				code: 200,
 				message: "Single User Information",
-				data: singleUserData,
+				data: singleUserInfo,
 			});
 			//return console.log(singleUserInfo)
 		} catch (error) {

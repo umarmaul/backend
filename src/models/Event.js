@@ -4,8 +4,8 @@ const eventSchema = new mongoose.Schema(
 	{
 		event_level: {
 			type: String,
-			// enum: ["low", "mid", "high"],
-			// default: "low",
+			enum: ["low", "mid", "high"],
+			default: "low",
 		},
 		event_type: {
 			type: String,
@@ -17,12 +17,13 @@ const eventSchema = new mongoose.Schema(
 			type: String,
 		},
 		from_camera: {
-			type: String,
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "cameras",
 		},
 		status: {
 			type: String,
-			// enum: ["new", "on_progress", "done"],
-			// default: "new",
+			enum: ["new", "on_progress", "done"],
+			default: "new",
 		},
 		createdAt: {
 			type: Date,

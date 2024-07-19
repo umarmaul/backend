@@ -1,6 +1,7 @@
 require("dotenv").config({ path: "./.env.local" });
 
 const Event = require("../models/Event");
+const Camera = require("../models/Camera");
 const fs = require("fs");
 const DIR = "./";
 
@@ -12,7 +13,7 @@ module.exports = class EventController {
 		//Image check if have then include image into payload
 		let imgUrl = "";
 		if (req.file) imgUrl = `storage/profile-pictures/${req.file.filename}`;
-		payload.profile_picture = imgUrl;
+		payload.event_picture = imgUrl;
 
 		try {
 			const eventCreate = await new Event(payload).save();
@@ -35,7 +36,9 @@ module.exports = class EventController {
 		const id = req.params.id;
 
 		try {
-			const singleEventInfo = await Event.findById(id);
+			const singleEventInfo = await Event.findById(id).populate(
+				"from_camera"
+			);
 			const {
 				event_level,
 				event_type,
@@ -51,10 +54,10 @@ module.exports = class EventController {
 			const singleEventData = {
 				event_level,
 				event_type,
-				event_picture: `${process.env.LINK_SERVICE_URL}/event/${getImageName[1]}`,
 				description,
 				from_camera,
 				status,
+				event_picture: `${process.env.LINK_SERVICE_URL}/event/${getImageName[1]}`,
 			};
 
 			return res.status(200).json({
@@ -75,7 +78,7 @@ module.exports = class EventController {
 	//All Event information
 	static allEvent = async (req, res) => {
 		try {
-			const allEventInfo = await Event.find();
+			const allEventInfo = await Event.find().populate("from_camera");
 
 			return res.status(200).json({
 				code: 200,
@@ -100,14 +103,14 @@ module.exports = class EventController {
 		//If File have then push file into reqBody then process update
 		let imgUrl = "";
 		if (req.file) imgUrl = `storage/event-pictures/${req.file.filename}`;
-		reqBody.profile_picture = imgUrl;
+		reqBody.event_picture = imgUrl;
 
 		try {
-			//Check Event have profile_picture/image. if had then first delete local file then database
+			//Check Event have event_picture/image. if had then first delete local file then database
 			const eventInfo = await Event.findById(id);
-			const eventprofile_pictureInfo = eventInfo.profile_picture;
-			if (eventprofile_pictureInfo) {
-				fs.unlinkSync(DIR + eventprofile_pictureInfo);
+			const event_pictureInfo = eventInfo.event_picture;
+			if (event_pictureInfo) {
+				fs.unlinkSync(DIR + event_pictureInfo);
 			}
 
 			const updateItem = await Event.findOneAndUpdate(
@@ -134,10 +137,10 @@ module.exports = class EventController {
 		//return console.log(id)
 		try {
 			const eventDeleteinfo = await Event.findOneAndDelete({ _id: id });
-			const { profile_picture } = eventDeleteinfo;
+			const { event_picture } = eventDeleteinfo;
 
-			if (profile_picture) {
-				fs.unlinkSync(DIR + profile_picture);
+			if (event_picture) {
+				fs.unlinkSync(DIR + event_picture);
 			}
 
 			//const eventDelete = await Event.deleteOne({_id: id});

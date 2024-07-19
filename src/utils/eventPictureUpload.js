@@ -13,12 +13,11 @@ const storage = (destination) =>
 			);
 		},
 	});
-
-const fileUpload = (destination) =>
+const eventPictureUpload = (destination) =>
 	multer({
 		storage: storage(destination),
 		limits: {
-			fileSize: 2 * 1024 * 1024, //2mb,
+			fileSize: 10 * 1024 * 1024, //10mb,
 		},
 		fileFilter: (req, file, cb) => {
 			if (
@@ -34,10 +33,6 @@ const fileUpload = (destination) =>
 				);
 			}
 		},
-		onError: function (err, next) {
-			return console.log("error", err);
-			next(err);
-		},
-	}).single("picture");
+	}).single("event_picture");
 
-module.exports = fileUpload;
+module.exports = eventPictureUpload;
