@@ -1,22 +1,34 @@
 const mongoose = require("mongoose");
 
-const locationSchema = new mongoose.Schema(
+const reportSchema = new mongoose.Schema(
     {
-        name: {
+        report_type: {
             type: String,
-            default: "Location",
+            default: "normal",
         },
-        supervisor: {
+        reporter: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "users",
         },
-        operator: {
+        reported_to: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "users",
         },
-        description: {
+        event: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "events",
+        },
+        events: {
             type: String,
             default: "No Description",
+        },
+        status: {
+            type: String,
+            default: "new",
+        },
+        report_file: {
+            type: String,
+            default: "no file",
         },
         createdAt: {
             type: Date,
@@ -31,5 +43,5 @@ const locationSchema = new mongoose.Schema(
     }
 );
 
-const Location = mongoose.model("locations", locationSchema);
-module.exports = Location;
+const Report = mongoose.model("reports", reportSchema);
+module.exports = Report;

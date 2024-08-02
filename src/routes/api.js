@@ -1,6 +1,7 @@
 const express = require("express");
 const UserController = require("../controllers/UserController");
 const EventController = require("../controllers/EventController");
+const SensorController = require("../controllers/SensorController");
 const profilePictureUpload = require("../utils/profilePictureUpload");
 const eventPictureUpload = require("../utils/eventPictureUpload");
 
@@ -8,32 +9,39 @@ const router = express.Router();
 
 // user api
 router.post(
-	"/create-user",
-	profilePictureUpload("./storage/profile-pictures"),
-	UserController.createUser
+    "/create-user",
+    profilePictureUpload("./storage/profile-pictures"),
+    UserController.createUser
 );
 router.get("/all-user", UserController.allUser);
 router.get("/single-user/:id", UserController.singleUser);
 router.post(
-	"/update-user/:id",
-	profilePictureUpload("./storage/profile-pictures"),
-	UserController.updateUser
+    "/update-user/:id",
+    profilePictureUpload("./storage/profile-pictures"),
+    UserController.updateUser
 );
 router.delete("/delete-user/:id", UserController.deleteUser);
 
 // event api
 router.post(
-	"/create-event",
-	eventPictureUpload("./storage/event-pictures"),
-	EventController.createEvent
+    "/create-event",
+    eventPictureUpload("./storage/event-pictures"),
+    EventController.createEvent
 );
 router.get("/all-event", EventController.allEvent);
 router.get("/single-event/:id", EventController.singleEvent);
 router.post(
-	"/update-event/:id",
-	eventPictureUpload("./storage/event-pictures"),
-	EventController.updateEvent
+    "/update-event/:id",
+    eventPictureUpload("./storage/event-pictures"),
+    EventController.updateEvent
 );
 router.delete("/delete-event/:id", EventController.deleteEvent);
+
+// sensor api
+router.post(
+    "/sensor-data",
+    eventPictureUpload("./storage/event-pictures"),
+    SensorController.createSensor
+);
 
 module.exports = router;
