@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Location = require("./Location");
 
 const sensorSchema = new mongoose.Schema(
     {
