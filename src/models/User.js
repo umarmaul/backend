@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            default: "User",
+            default: "user",
         },
         username: {
             type: String,
@@ -17,15 +17,15 @@ const userSchema = new mongoose.Schema(
         },
         password: {
             type: String,
-            default: "password",
+            default: "user",
         },
         role: {
             type: String,
             default: "user",
         },
-        profile_picture: {
+        profie_picture: {
             type: String,
-            default: "no image",
+            default: "no picture",
         },
         createdAt: {
             type: Date,
@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema(
         },
         updatedAt: {
             type: Date,
+            default: Date.now,
         },
     },
     {

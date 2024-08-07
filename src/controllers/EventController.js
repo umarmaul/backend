@@ -45,11 +45,6 @@ module.exports = class EventController {
             const singleEventInfo = await Event.findById(id).populate(
                 "from_camera"
             );
-            const { event_picture } = singleEventInfo;
-            let getImageName = event_picture.match(/\/([^\/?#]+)[^\/]*$/);
-
-            //return console.log(getImageName);
-            singleEventInfo.event_picture = `${process.env.LINK_SERVICE_URL}/event/${getImageName[1]}`;
 
             return res.status(200).json({
                 code: 200,
@@ -71,12 +66,6 @@ module.exports = class EventController {
         try {
             const allEventInfo = await Event.find().populate("from_camera");
 
-            allEventInfo.forEach((event) => {
-                const { event_picture } = event;
-                let getImageName = event_picture.match(/\/([^\/?#]+)[^\/]*$/);
-                event.event_picture = `${process.env.LINK_SERVICE_URL}/event/${getImageName[1]}`;
-            });
-
             return res.status(200).json({
                 code: 200,
                 message: "All Event Information",
@@ -95,12 +84,18 @@ module.exports = class EventController {
     //Event Update by Event Id
     static updateEvent = async (req, res) => {
         const id = req.params.id;
-        let reqBody = req.body;
+        let payload = req.body;
 
-        //If File have then push file into reqBody then process update
+        //Image check if have then include image into payload
         let imgUrl = "";
         if (req.file) imgUrl = `storage/event-pictures/${req.file.filename}`;
-        reqBody.event_picture = imgUrl;
+        payload.event_picture = imgUrl;
+
+        const { event_picture } = payload;
+        let getImageName = event_picture.match(/\/([^\/?#]+)[^\/]*$/);
+
+        //return console.log(getImageName);
+        payload.event_picture = `${process.env.LINK_SERVICE_URL}/event/${getImageName[1]}`;
 
         try {
             //Check Event have event_picture/image. if had then first delete local file then database
@@ -112,12 +107,12 @@ module.exports = class EventController {
 
             const updateItem = await Event.findOneAndUpdate(
                 { _id: id },
-                reqBody
+                payload
             );
             return res.status(200).json({
                 code: 200,
                 message: "Event Update Information Successfully",
-                data: reqBody,
+                data: payload,
             });
         } catch (error) {
             res.status(501).json({

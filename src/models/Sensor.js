@@ -4,7 +4,7 @@ const sensorSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            default: "Sensor",
+            default: "sensor",
         },
         temperature: {
             type: Number,
@@ -24,7 +24,8 @@ const sensorSchema = new mongoose.Schema(
         },
         from_location: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "locations",
+            ref: Location,
+            default: null,
         },
         status: {
             type: String,
@@ -36,6 +37,7 @@ const sensorSchema = new mongoose.Schema(
         },
         updatedAt: {
             type: Date,
+            default: Date.now,
         },
     },
     {

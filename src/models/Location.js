@@ -1,22 +1,25 @@
 const mongoose = require("mongoose");
+const User = require("./User");
 
 const locationSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            default: "Location",
+            default: "location",
         },
         supervisor: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "users",
+            ref: User,
+            default: null,
         },
         operator: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "users",
+            ref: User,
+            default: null,
         },
         description: {
             type: String,
-            default: "No Description",
+            default: "no description",
         },
         createdAt: {
             type: Date,
@@ -24,6 +27,7 @@ const locationSchema = new mongoose.Schema(
         },
         updatedAt: {
             type: Date,
+            default: Date.now,
         },
     },
     {

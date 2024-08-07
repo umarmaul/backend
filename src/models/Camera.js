@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
+const Location = require("./Location");
 
 const cameraSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            default: "Camera",
+            default: "camera",
         },
         ip_address: {
             type: String || Number,
@@ -12,15 +13,16 @@ const cameraSchema = new mongoose.Schema(
         },
         identifier: {
             type: String,
-            default: "Camera",
+            default: "camera",
         },
         type: {
             type: String,
-            default: "CCTV",
+            default: "cctv",
         },
         from_location: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "locations",
+            ref: Location,
+            default: null,
         },
         createdAt: {
             type: Date,
@@ -28,6 +30,7 @@ const cameraSchema = new mongoose.Schema(
         },
         updatedAt: {
             type: Date,
+            default: Date.now,
         },
     },
     {

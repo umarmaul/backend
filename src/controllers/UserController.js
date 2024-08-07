@@ -15,6 +15,12 @@ module.exports = class UserController {
         if (req.file) imgUrl = `storage/profile-pictures/${req.file.filename}`;
         payload.profile_picture = imgUrl;
 
+        const { profile_picture } = payload;
+        let getImageName = profile_picture.match(/\/([^\/?#]+)[^\/]*$/);
+
+        //return console.log(getImageName);
+        payload.profile_picture = `${process.env.LINK_SERVICE_URL}/user/${getImageName[1]}`;
+
         try {
             const userCreate = await new User(payload).save();
             return res.status(200).json({
@@ -37,11 +43,6 @@ module.exports = class UserController {
 
         try {
             const singleUserInfo = await User.findById(id).select("-password");
-            const { profile_picture } = singleUserInfo;
-            let getImageName = profile_picture.match(/\/([^\/?#]+)[^\/]*$/);
-
-            //return console.log(getImageName);
-            singleUserInfo.profile_picture = `${process.env.LINK_SERVICE_URL}/user/${getImageName[1]}`;
 
             return res.status(200).json({
                 code: 200,
@@ -82,12 +83,18 @@ module.exports = class UserController {
     //User Update by User Id
     static updateUser = async (req, res) => {
         const id = req.params.id;
-        let reqBody = req.body;
+        let payload = req.body;
 
-        //If File have then push file into reqBody then process update
+        //Image check if have then include image into payload
         let imgUrl = "";
         if (req.file) imgUrl = `storage/profile-pictures/${req.file.filename}`;
-        reqBody.profile_picture = imgUrl;
+        payload.profile_picture = imgUrl;
+
+        const { profile_picture } = payload;
+        let getImageName = profile_picture.match(/\/([^\/?#]+)[^\/]*$/);
+
+        //return console.log(getImageName);
+        payload.profile_picture = `${process.env.LINK_SERVICE_URL}/user/${getImageName[1]}`;
 
         try {
             //Check user have profile_picture/image. if had then first delete local file then database
@@ -99,12 +106,12 @@ module.exports = class UserController {
 
             const updateItem = await User.findOneAndUpdate(
                 { _id: id },
-                reqBody
+                payload
             );
             return res.status(200).json({
                 code: 200,
                 message: "User Update Information Successfully",
-                data: reqBody,
+                data: payload,
             });
         } catch (error) {
             res.status(501).json({

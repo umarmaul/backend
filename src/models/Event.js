@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Camera = require("./Camera");
 
 const eventSchema = new mongoose.Schema(
     {
@@ -8,19 +9,20 @@ const eventSchema = new mongoose.Schema(
         },
         event_type: {
             type: String,
-            default: "normal",
+            default: "event",
         },
         event_picture: {
             type: String,
-            default: "no image",
+            default: "no picture",
         },
         description: {
             type: String,
-            default: "No Description",
+            default: "no description",
         },
         from_camera: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "cameras",
+            ref: Camera,
+            default: null,
         },
         status: {
             type: String,
@@ -32,6 +34,7 @@ const eventSchema = new mongoose.Schema(
         },
         updatedAt: {
             type: Date,
+            default: Date.now,
         },
     },
     {
