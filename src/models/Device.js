@@ -26,7 +26,7 @@ const deviceSchema = new mongoose.Schema(
         from_location: {
             type: mongoose.Schema.Types.ObjectId,
             ref: Location,
-            default: null,
+            default: "66ad09b370f0f00db3f3fc6b",
         },
         createdAt: {
             type: Date,

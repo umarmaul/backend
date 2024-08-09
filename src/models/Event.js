@@ -22,7 +22,7 @@ const eventSchema = new mongoose.Schema(
         from_device: {
             type: mongoose.Schema.Types.ObjectId,
             ref: Device,
-            default: null,
+            default: "66ad0f848344ce01638f7b30",
         },
         status: {
             type: String,

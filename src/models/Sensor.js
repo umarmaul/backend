@@ -3,10 +3,6 @@ const Device = require("./Device");
 
 const sensorSchema = new mongoose.Schema(
     {
-        name: {
-            type: String,
-            default: "sensor",
-        },
         temperature: {
             type: Number,
             default: 0,
@@ -26,11 +22,11 @@ const sensorSchema = new mongoose.Schema(
         from_device: {
             type: mongoose.Schema.Types.ObjectId,
             ref: Device,
-            default: null,
+            default: "66ad14cd8344ce01638f7b4a",
         },
         status: {
             type: String,
-            default: "active",
+            default: "new",
         },
         createdAt: {
             type: Date,

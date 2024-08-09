@@ -10,12 +10,12 @@ const locationSchema = new mongoose.Schema(
         supervisor: {
             type: mongoose.Schema.Types.ObjectId,
             ref: User,
-            default: null,
+            default: "66b398bc2f0cb789dd6bd0a8",
         },
         operator: {
             type: mongoose.Schema.Types.ObjectId,
             ref: User,
-            default: null,
+            default: "66b398bc2f0cb789dd6bd0a8",
         },
         description: {
             type: String,
