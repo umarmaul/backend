@@ -15,7 +15,8 @@ module.exports = class SensorController {
             payload.humidity > 70 ||
             payload.AQI < 0 ||
             payload.AQI > 50 ||
-            payload.human_presence === true
+            payload.human_presence === true ||
+            payload.human_presence === "true"
         ) {
             payload.status = "new";
         } else {

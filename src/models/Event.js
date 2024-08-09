@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Camera = require("./Camera");
+const Device = require("./Device");
 
 const eventSchema = new mongoose.Schema(
     {
@@ -19,9 +19,9 @@ const eventSchema = new mongoose.Schema(
             type: String,
             default: "no description",
         },
-        from_camera: {
+        from_device: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: Camera,
+            ref: Device,
             default: null,
         },
         status: {

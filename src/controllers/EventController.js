@@ -1,7 +1,7 @@
 require("dotenv").config({ path: "./.env.development" });
 
 const Event = require("../models/Event");
-const Camera = require("../models/Camera");
+const Device = require("../models/Device");
 const fs = require("fs");
 const DIR = "./";
 
@@ -43,7 +43,7 @@ module.exports = class EventController {
 
         try {
             const singleEventInfo = await Event.findById(id).populate(
-                "from_camera"
+                "from_device"
             );
 
             return res.status(200).json({
@@ -64,7 +64,7 @@ module.exports = class EventController {
     //All Event information
     static allEvent = async (req, res) => {
         try {
-            const allEventInfo = await Event.find().populate("from_camera");
+            const allEventInfo = await Event.find().populate("from_device");
 
             return res.status(200).json({
                 code: 200,

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Location = require("./Location");
+const Device = require("./Device");
 
 const sensorSchema = new mongoose.Schema(
     {
@@ -23,9 +23,9 @@ const sensorSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
-        from_location: {
+        from_device: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: Location,
+            ref: Device,
             default: null,
         },
         status: {
