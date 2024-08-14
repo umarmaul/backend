@@ -18,9 +18,9 @@ module.exports = class SensorController {
             payload.human_presence === true ||
             payload.human_presence === "true"
         ) {
-            payload.status = "new";
+            payload.status = "unassigned";
         } else {
-            payload.status = "approved";
+            payload.status = "resolved";
         }
 
         try {
